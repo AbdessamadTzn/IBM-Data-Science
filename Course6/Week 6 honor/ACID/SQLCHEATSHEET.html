@@ -1,0 +1,451 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><h2><span class="header-link octicon octicon-link"></span>SQL Cheat Sheet: Views, Stored Procedures and Transactions</h2><h3><span class="header-link octicon octicon-link"></span>Views</h3><table width="100%">
+<tbody><tr>
+<th style="width:10%;">
+Topic
+</th>
+<th style="width:30%;">
+Syntax
+</th>
+<th style="width:30%;">
+Description
+</th>
+<th style="width:30%;">
+Example
+</th>
+</tr>
+
+<tr>
+<td style="width:10%;">
+Create View 
+</td>
+<td style="width:30%;">
+<code>
+CREATE VIEW view_name AS SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+</code> <br>
+</td>
+<td style="width:30%;">
+A <code>CREATE VIEW</code> is an alternative way of 
+representing data that exists in one or more tables.
+</td>
+<td style="width:30%;">
+<code>
+CREATE VIEW EMPSALARY AS 
+SELECT EMP_ID, F_NAME, L_NAME, 
+B_DATE, SEX, SALARY
+FROM EMPLOYEES; 
+</code>
+</td>
+</tr>
+
+<tr>
+<td style="width:10%;">
+Update a View
+</td>
+<td style="width:30%;">
+<code>
+CREATE OR REPLACE VIEW view_name AS 
+SELECT column1, column2, ... FROM table_name 
+WHERE condition;
+</code> <br>
+</td>
+<td style="width:30%;">
+The <code>CREATE OR REPLACE</code> 
+VIEW command updates a view.
+</td>
+<td style="width:30%;">
+<code>
+CREATE OR REPLACE VIEW EMPSALARY  AS 
+SELECT EMP_ID, F_NAME, L_NAME, B_DATE, SEX, 
+JOB_TITLE, MIN_SALARY, MAX_SALARY FROM EMPLOYEES, 
+JOBS WHERE EMPLOYEES.JOB_ID = JOBS.JOB_IDENT;
+</code>
+</td>
+</tr>
+
+<tr>
+<td style="width:10%;">
+Drop a View
+</td>
+<td style="width:30%;">
+<code>
+DROP VIEW view_name;
+</code> <br>
+</td>
+<td style="width:30%;">
+Use the <code>DROP VIEW</code> statement 
+to remove a view from the database. 
+</td>
+<td style="width:30%;">
+<code>
+DROP VIEW EMPSALARY;
+</code>
+</td>
+</tr>
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>Stored Procedures in IBM Db2 using SQL</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Stored Procedures
+</td>
+<td style="width:30%;">
+<code>
+--#SET TERMINATOR @
+CREATE PROCEDURE PROCEDURE_NAME
+
+<p>LANGUAGE</p>
+<p>BEGIN </p>
+</code><p><code>END<br>@<br></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>stored procedure</code> is a prepared SQL code that you can save, so the code can be reused over and over again.
+
+<br>
+
+<p>The default terminator for a stored procedure is semicolon(;). To set a different terminator we use <code>SET TERMINATOR</code> clause followed by the terminator such as ‘@’.</p>
+</td>
+<td style="width:30%;">
+<code>
+--#SET TERMINATOR @
+CREATE PROCEDURE RETRIEVE_ALL       
+
+<p>LANGUAGE SQL<br>READS SQL DATA                      </p>
+<p>DYNAMIC RESULT SETS 1<br>BEGIN </p>
+<p>DECLARE C1 CURSOR<br>WITH RETURN FOR                 </p>
+<p>SELECT * FROM PETSALE;          </p>
+<p>OPEN C1;                      </p>
+</code><p><code>END<br>@<br></code></p>
+</td>
+</tr>
+
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>Stored Procedures in MySQL using phpMyAdmin</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Stored Procedures
+</td>
+<td style="width:30%;">
+<code>
+
+<p>DELIMITER //</p>
+<p>CREATE PROCEDURE PROCEDURE_NAME</p>
+<p>BEGIN   </p>
+<p>END //</p>
+<p>DELIMITER ; </p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>stored procedure</code> is a prepared SQL code that you can save, so the code can be reused over and over again.
+
+<br>
+
+<p>The default terminator for a stored procedure is semicolon (;). To set a different terminator we use <code>DELIMITER</code> clause followed by the terminator such as $$ or //.</p>
+</td>
+<td style="width:30%;">
+<code>
+DELIMITER //
+
+<p>CREATE PROCEDURE RETRIEVE_ALL()</p>
+<p>BEGIN</p>
+<p>   SELECT *  FROM PETSALE;</p>
+<p>END //</p>
+</code><p><code>DELIMITER ;<br></code></p>
+</td>
+</tr>
+
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>Transactions with Db2</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Commit command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>COMMIT;</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>COMMIT command</code> is used to persist the changes in the database.
+<br>
+
+<p>The default terminator for a COMMIT command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+CREATE TABLE employee(ID INT, Name VARCHAR(20), City VARCHAR(20), Salary INT, Age INT); 
+
+
+<p>INSERT INTO employee( ID, Name, City, Salary, Age) VALUES( 1, 
+‘Priyanka pal’, ‘Nasik’, 36000, 21), (2, ‘Riya chowdary’, ‘Bangalor’, 
+82000, 29);</p>
+<p>SELECT *FROM employee;<br>COMMIT;</p>
+</code>
+</td>
+</tr>
+
+
+<tr>
+<td style="width:10%;">
+Rollback command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>ROLLBACK;</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>ROLLBACK command</code> is used to rollback the transactions which are not saved in the database.
+<br>
+
+<p>The default terminator for a ROLLBACK command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+    
+<blockquote>
+<p>As auto-commit is enabled by default, all transactions will be 
+committed. We need to disable this option to see how rollback works.</p>
+</blockquote>
+<blockquote>
+<p>For db2, we have to disable auto-commit manually. Click the gear icon
+ located on the right side of the SQL Assistant window. Next, select the
+ “On Success” drop-down and choose “commit after the last statement in 
+the script” Remember to save your changes!</p>
+</blockquote>
+<p><img src="SQLCHEATSHEET_files/Disable_auto-commit.png" alt="disable_auto-commit"></p>
+<p>INSERT INTO employee VALUES (3, ‘Swetha Tiwari’, ‘Kanpur’, 38000, 38);</p>
+<p>SELECT *FROM employee;<br>ROLLBACK;<br>SELECT *FROM employee;</p>
+</code>
+</td>
+</tr>
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>Transactions with MySQL</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Commit command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>COMMIT;</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>COMMIT command</code> is used to persist the changes in the database.
+<br>
+
+<p>The default terminator for a COMMIT command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+CREATE TABLE employee(ID INT, Name VARCHAR(20), City VARCHAR(20), Salary INT, Age INT);
+
+<p>START TRANSACTION;</p>
+<p>INSERT INTO employee( ID, Name, City, Salary, Age) VALUES( 1, 
+‘Priyanka pal’, ‘Nasik’, 36000, 21), (2, ‘Riya chowdary’, ‘Bangalor’, 
+82000, 29);</p>
+<p>SELECT *FROM employee;<br>COMMIT;</p>
+</code>
+</td>
+</tr>
+
+
+<tr>
+<td style="width:10%;">
+Rollback command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>ROLLBACK;</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>ROLLBACK command</code> is used to rollback the transactions which are not saved in the database.
+<br>
+
+<p>The default terminator for a ROLLBACK command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+    
+<blockquote>
+<p>As auto-commit is enabled by default, all transactions will be 
+committed. We need to disable this option to see how rollback works. For
+ MySQL use the command “SET autocommit = 0;”</p>
+</blockquote>
+<p>INSERT INTO employee VALUES (3, ‘Swetha Tiwari’, ‘Kanpur’, 38000, 38);</p>
+<p>SELECT *FROM employee;<br>ROLLBACK;<br>SELECT *FROM employee;</p>
+</code>
+</td>
+</tr>
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>Db2 Transactions using Stored Procedure</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Commit command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>–#SET TERMINATOR @</p>
+<p>CREATE PROCEDURE PROCEDURE_NAME</p>
+<p>BEGIN   </p>
+<p>COMMIT;</p>
+<p>END<br>@</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>COMMIT command</code> is used to persist the changes in the database.
+<br>
+
+<p>The default terminator for a COMMIT command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+--#SET TERMINATOR @
+CREATE PROCEDURE TRANSACTION_ROSE                           
+LANGUAGE SQL                                                
+MODIFIES SQL DATA                                           
+
+<p>BEGIN</p>
+<p>   DECLARE SQLCODE INTEGER DEFAULT 0;<br>   DECLARE retcode INTEGER DEFAULT 0;<br>   DECLARE CONTINUE HANDLER FOR SQLEXCEPTION<br>   SET retcode = SQLCODE;                              </p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-200<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-300<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   IF retcode &lt; 0 THEN<br>      ROLLBACK WORK;</p>
+<p>   ELSE<br>      COMMIT WORK;</p>
+<p>   END IF;</p>
+</code><p><code>END<br>@<br></code></p>
+</td>
+</tr>
+
+<tr>
+<td style="width:10%;">
+Rollback command           
+</td>
+<td style="width:30%;">
+<code>
+--#SET TERMINATOR @
+
+<p>CREATE PROCEDURE PROCEDURE_NAME</p>
+<p>BEGIN   </p>
+<p>ROLLBACK;</p>
+<p>COMMIT;</p>
+<p>END<br>@</p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>ROLLBACK command</code> is used to rollback the transactions which are not saved in the database.
+<br>
+
+<p>The default terminator for a ROLLBACK command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+--#SET TERMINATOR @
+CREATE PROCEDURE TRANSACTION_ROSE                           
+LANGUAGE SQL                                                
+MODIFIES SQL DATA                                           
+
+<p>BEGIN</p>
+<p>   DECLARE SQLCODE INTEGER DEFAULT 0;<br>   DECLARE retcode INTEGER DEFAULT 0;<br>   DECLARE CONTINUE HANDLER FOR SQLEXCEPTION<br>   SET retcode = SQLCODE;                              </p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-200<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-300<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   IF retcode &lt; 0 THEN<br>      ROLLBACK WORK;</p>
+<p>   ELSE<br>      COMMIT WORK;</p>
+<p>   END IF;</p>
+</code><p><code>END<br>@<br></code></p>
+</td>
+</tr>
+
+</tbody></table><h3><span class="header-link octicon octicon-link"></span>MySQL Transactions using Stored Procedure</h3><table width="100%">
+<tbody><tr>
+<td style="width:10%;">
+Commit command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>DELIMITER //</p>
+<p>CREATE PROCEDURE PROCEDURE_NAME</p>
+<p>BEGIN   </p>
+<p>COMMIT;</p>
+<p>END //</p>
+<p>DELIMITER ; </p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>COMMIT command</code> is used to persist the changes in the database.
+<br>
+
+<p>The default terminator for a COMMIT command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+DELIMITER //
+
+<p>CREATE PROCEDURE TRANSACTION_ROSE()</p>
+<p>BEGIN</p>
+<p>   DECLARE EXIT HANDLER FOR SQLEXCEPTION<br>   BEGIN<br>       ROLLBACK;<br>       RESIGNAL;<br>   END;                </p>
+<p>   START TRANSACTION;<br>   UPDATE BankAccounts<br>   SET Balance = Balance-200<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-300<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   COMMIT;    </p>
+<p>END //</p>
+</code><p><code>DELIMITER ;<br></code></p>
+</td>
+</tr>
+
+<tr>
+<td style="width:10%;">
+Rollback command           
+</td>
+<td style="width:30%;">
+<code>
+
+<p>DELIMITER //</p>
+<p>CREATE PROCEDURE PROCEDURE_NAME</p>
+<p>BEGIN   </p>
+<p>ROLLBACK;</p>
+<p>COMMIT;</p>
+<p>END //</p>
+<p>DELIMITER ; </p>
+</code><p><code></code> <br></p>
+</td>
+<td style="width:30%;"> 
+A <code>ROLLBACK command</code> is used to rollback the transactions which are not saved in the database.
+<br>
+
+<p>The default terminator for a ROLLBACK command is semicolon (;).</p>
+</td>
+<td style="width:30%;">
+<code>
+DELIMITER //
+
+<p>CREATE PROCEDURE TRANSACTION_ROSE()</p>
+<p>BEGIN</p>
+<p>   DECLARE EXIT HANDLER FOR SQLEXCEPTION<br>   BEGIN<br>       ROLLBACK;<br>       RESIGNAL;<br>   END;                </p>
+<p>  START TRANSACTION;<br>   UPDATE BankAccounts<br>   SET Balance = Balance-200<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   UPDATE BankAccounts<br>   SET Balance = Balance-300<br>   WHERE AccountName = ‘Rose’;</p>
+<p>   COMMIT;    </p>
+<p>END //</p>
+</code><p><code>DELIMITER ;<br></code></p>
+</td>
+</tr>
+
+</tbody></table><h2><span class="header-link octicon octicon-link"></span>Author(s)</h2><p><a href="https://www.linkedin.com/in/mrutyunjaya-naidu-duvvana-4980a3144/" target="_blank" rel="noopener noreferrer">D.M Naidu</a></p><footer>
+<img src="SQLCHEATSHEET_files/footer_6b.png" alt="">
+</footer><h2><span class="header-link octicon octicon-link"></span>Changelog</h2><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Version</th>
+<th>Changed by</th>
+<th>Change Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022-10-04</td>
+<td>1.0</td>
+<td>D.M.Naidu</td>
+<td>Initial Version</td>
+</tr>
+</tbody></table></body></html>
